@@ -1,0 +1,23 @@
+input_base: .
+output_base: /home/blegat/Dropbox
+clients:
+  - name: Normal
+    arguments: &args
+      sol:
+        - '-Sol'
+        - ''
+    input: &input
+      path_format: LMAT2450-exercises{0}.pdf
+      parameters:
+        - arg: sol
+    output:
+      path_format: EPL-Backup/Q7/Crypto/APE/LMAT2450-exercises{0}.pdf
+      parameters:
+        - arg: sol
+  - name: MAP
+    arguments: *args
+    input: *input
+    output:
+      path_format: MAP/Q7/Crypto/APE/LINMA2450-exercises{0}.pdf
+      parameters:
+        - arg: sol

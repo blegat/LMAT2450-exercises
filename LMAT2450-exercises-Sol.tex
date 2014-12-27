@@ -1,0 +1,73 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[english]{babel}
+\usepackage{lmodern}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{verbatim}
+
+\usepackage{ifthen}
+\usepackage[framemethod=tikz]{mdframed}
+\usepackage{tikzpagenodes}
+\usetikzlibrary{calc, arrows}
+
+\newcounter{Exo}[section]
+
+% greyarrow has much better handling of page breaks, see the link on stackoverflow for more info
+\def\SolStyle{greyarrow}
+\ifthenelse{\isundefined{\SolStyle}}{\def\SolStyle{greyarrow}}{}
+\ifthenelse{\equal{\SolStyle}{greyarrow}}
+{
+  \input{greyarrow.tex}
+}
+{
+  \input{boxes.tex}
+}
+
+\newenvironment{solution}{\stepcounter{Exo}\begin{mysolution}}{\end{mysolution}}
+\newmdenv[style=mysquare]{mysolution}
+
+\usepackage{url}
+\newcommand{\newape}
+{\section{Practical Session \thesection}}
+\newcommand{\nosolution}
+{\begin{mysolution}\stepcounter{Exo}
+The exercise~\theExo{} does not yet have a solution.
+You are encouraged to submit one to the following address
+\begin{center}
+  \url{https://github.com/blegat/LINMA2450-exercises}
+\end{center}
+or by mail to \url{benoit.legat@gmail.com}.\end{mysolution}}
+
+\newcommand{\A}{\mathcal{A}}
+\newcommand{\C}{\mathcal{C}}
+\newcommand{\K}{\mathcal{K}}
+\newcommand{\M}{\mathcal{M}}
+\DeclareMathOperator{\Gen}{Gen}
+\DeclareMathOperator{\Enc}{Enc}
+\DeclareMathOperator{\Dec}{Dec}
+
+\DeclareMathOperator{\PrivK}{PrivK}
+\newcommand{\PrivKmultcpa}{\PrivK^{\text{multcpa}}}
+
+\title{Solutions of the exercises of Cryptography}
+\author{Benoît Legat}
+
+\begin{document}
+
+\maketitle
+\tableofcontents
+
+\include{APE1}
+\include{APE2}
+\include{APE3}
+\include{APE4}
+\include{APE5}
+
+\bibliographystyle{plain}
+\bibliography{biblio}
+
+\end{document}
