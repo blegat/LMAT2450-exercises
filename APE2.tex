@@ -1,13 +1,268 @@
 \newape
+
+\begin{solution}
+  \begin{itemize}
+    \item
+      Let $\tilde{\Pi} = \langle \tilde{\Gen}, \tilde{\Mac}, \tilde{\Vrfy} \rangle$, defined as:
+      \begin{itemize}
+        \item $\tilde{\Gen}$: chooses a random $f$.
+        \item $\tilde{\Mac}$: on input $m$, outputs $f(m)$.
+        \item $\tilde{\Vrfy}$: on input $(m,t)$, outputs $1$ iff $f(m) = t$.
+      \end{itemize}
+
+      Let's analyse the maximum value of $\Pr[\MacForge_{\A, \tilde{\Pi}}(n) = 1]$ for an adversary $\mathcal{A}$.
+      If after $q$ different queries (it gains no info doing the same query twice),
+      $m_1, \ldots, m_q$, $\A$ outputs $(m, t)$, what are its chances of success ?
+      Let $f:\{0,1\}^n \to \{0,1\}^n$.
+      There are $(2^n)^{2^n}$ different $f$ and we pick a random one uniformly.
+      However, there are only $(2^n)^{2^n-q}$ experiments such that $\A$ have received $(m_i,t_i)$ for $i = 1, \ldots, q$ because
+      there are $(2^n)^{2^n-q}$ $f$ such that $f(m_i) = t_i$ for $i = 1, \ldots, q$.
+      We could be in any of them.
+      Among them, only $(2^n)^{2^n-(q+1)}$ are such that $f(m) = t$.
+      Since $f$ is selected uniformly, we have
+
+      \begin{align*}
+        \Pr[\MacForge_{\A, \tilde{\Pi}}(n) = 1]
+        & = \Pr[f(m) = t | f(m_i) = t_i, \forall m = 1, \ldots, q]\\
+        & = \frac{\Pr[f(m) = t, f(m_i) = t_i, \forall m = 1, \ldots, q]}{\Pr[f(m_i) = t_i, \forall m = 1, \ldots, q]}\\
+        & = \frac{\frac{(2^n)^{2^n-(q+1)}}{(2^n)^{2^n}}}{\frac{(2^n)^{2^n-q}}{(2^n)^{2^n}}}\\
+        & = \frac{(2^n)^{2^n-(q+1)}}{(2^n)^{2^n-q}}\\
+        & = \frac{1}{2^n}.
+      \end{align*}
+      A shortcut would have been to argued that since, $f(m)$ is independent of the $f(m_i)$ so
+
+      \begin{align*}
+        \Pr[\MacForge_{\A, \tilde{\Pi}}(n) = 1]
+        & = \Pr[f(m) = t | f(m_i) = t_i, \forall m = 1, \ldots, q]\\
+        & = \Pr[f(m) = t]\\
+        & = \frac{(2^n)^{2^n-1}}{(2^n)^{2^n}}\\
+        & = \frac{1}{2^n}.
+      \end{align*}
+
+      It is quite surprising that instead of a upper bound
+      on $\Pr[\MacForge_{\A, \tilde{\Pi}}(n) = 1]$
+      depending on $\A$ (and reached for $\A$ super smart),
+      it is actually independent of $\A$.
+    \item
+      Let's now suppose that we have an adversary $\A$
+      that win with non-neglishible probability against a PRF $F$
+      and show that under this assumption we can build
+      a distinguisher $\D$ for $F$.
+
+      $\D$ will simply take a function $g$ as input
+      and run $\A$ using $g$ to create the tags.
+      He has $g$ so he can see if $\A$ wins or lose.
+      If $\A$ wins he outputs $1$ otherwise it outputs $0$.
+
+      We know that if $g$ is a pseudo random function,
+      $\Pr[\MacForge_{\A, \Pi_g} = 1] = \frac{1}{2^n}$
+      and if $g$ is a PRF
+      $\Pr[\MacForge_{\A, \Pi_g} = 1] = \eta(n)$
+      where $\eta$ is nonnegligible.
+      We have therefore
+      \[
+        |\Pr[\D^{F_k}(1^n) = 1] - \Pr[\D^{f}(1^n) = 1]|
+        = \left|\eta(n) - \frac{1}{2^n}\right|
+      \]
+      which is non-negligible.
+  \end{itemize}
+\end{solution}
+
+\begin{solution}
+  $\A$ can ask for the tag of any message $m_1$.
+  Once he has received $t_1 = H^s(k\|m)$ he can compute
+  $t = H^s(k\|m_1\||m_1|\|w)$ for any $w$.
+  It is simply $H^s(w)$ computed with $t_1$ as IV.
+\end{solution}
+
+\begin{solution}
+  From $L_0\|R_0$, we get $L_2\|R_2$
+  where
+
+  \begin{align*}
+    L_2 & = L_0 \xor F_k(R_0)\\
+    R_2 & = R_0 \xor F_k(L_0 \xor F_k(R_0)).
+  \end{align*}
+  When a distinguisher $\D$ sends $L_0\|R_0$ and receives
+  $L_2\|R_2$ we can
+  compute
+
+  \begin{align*}
+    L_2' & = L_0 \xor L_2\\
+         & = L_0 \xor (L_0 \xor F_k(R_0))\\
+         & = F_k(R_0)\\
+    R_2' & = R_0 \xor R_2\\
+         & = R_0 \xor (R_0 \xor F_k(L_0 \xor F_k(R_0)))\\
+         & = F_k(L_0 \xor F_k(R_0)).
+  \end{align*}
+  The problem is that $L_2'$ does not depend on $L_0$.
+
+  He can therefore send another request with the same $R_0$
+  and a different $L_0$.
+  If it gets the same $L_2'$,
+  It has only 1 chance over $2^l$ (where $l$ is the number of bits of $L$) to receive the same $L_2'$ for a random permutation.
+
+  If $\D$ decide to output 1 iff $L_2'$ is the same for the two request we have
+  \[ |\Pr[\D^{F_k}(1^n) = 1] -\Pr[\D^f(1^n)]| = 1 - \frac{1}{2^n} \]
+  which is clearly not negligible.
+\end{solution}
+
+\begin{solution}
+  Let say we have to split the message into $m$ messages of $n$ bits.
+  Choosing $m_0 = M_0 \| M_0 \| \cdots \| M_0$ and $m_1 = M_1 \| M_2 \| \cdots \| M_m$ with $M_i \neq M_j$ for $i \neq j$,
+  if $b = 0$, we will get $c = C_0 \| C_0 \| \cdots \| C_0$ for some $C_0 \in \C$ and $c = C_1 \| C_2 \| \cdots \| C_m$ for some $C_i \in \C$.
+
+  An adversary $\A$ can output $b = 0$ iff all the $C_i$s are equals.
+  We have
+  \[ \Pr[\PrivKeav_{\A,\text{ECB}}(nm)] = \frac{1}{2} + \frac{1-\epsilon(nm)}{2} \]
+  where $\epsilon(nn)$ is the probability that $C_1 = C_2 = \cdots = C_m$ when $b = 1$.
+  So $\epsilon(nm)$ is the probability that $F_k(M_1) = F_k(M_2) = \cdots = F_k(M_m)$.
+  However we know that $\epsilon(nm)$ is negligible and thefore $\frac{1-\epsilon(nm)}{2}$ is clearly non-negligible.
+
+  Indeed, if $\epsilon(nm)$ was non-negligible, we could build a simple distinguisher $\D$ for $F$.
+  We would pick $M_1, M_2, \ldots, M_m$ the same way as $\A$ and outputs $b = 1$ if we get all the same outputs.
+  For a random function $f$ the probability is $\left(\frac{1}{2^n}\right)^{m-1} = \frac{1}{2^{n(m-1)}}$
+  we would have
+  \[ |\Pr[\D^{F_k}(1^n) = 1] - \Pr[\D^f(1^n) = 1]| = \left|\epsilon(nm) - \frac{1}{2^{n(m-1)}}\right| \]
+  which would be non-negligible if $\epsilon(nm)$ was non-negligible.
+\end{solution}
+
+\begin{solution}
+  We will give 2 collisions for $f_1$ and $f_2$.
+
+  We know that $E(k, \cdot)$ is surjective because it must be injective and $\M = \C$.
+  Therefore the decryption exists for all $c \in \C$ ! We will use it for the second collision of $f_1$.
+
+  For $f_1$, we have the 2 following collisions
+
+  \begin{align*}
+    f_1(D(E(y,x),y), E(y,x))
+    & = E(E(y,x), D(E(y,x), y)) \xor E(y,x)\\
+    & = y \xor E(y,x)\\
+    & = E(y,x) \xor y\\
+    & = f_1(x, y)\\
+    f_1(D(0, E(y,x) \xor y), 0)
+    & = E(0, D(0, E(y, x) \xor y)) \xor 0\\
+    & = E(y, x) \xor y\\
+    & = f_1(x, y).
+  \end{align*}
+  and for $f_2$ we have
+
+  \begin{align*}
+    f_2(x, E(x,x)) & = E(x,x) \xor E(x,x)\\
+                   & = 0 & \forall x \in \{0,1\}^l\\
+    f_2(y, E(x,x)) & = E(y,y) \xor E(x,x)\\
+                   & = E(x,x) \xor E(y,y)\\
+                   & = f_2(x, E(y,y)).
+  \end{align*}
+\end{solution}
+
+\begin{solution}
+  \begin{itemize}
+    \item
+      Let's show that from a collision of $H_4$, we generate a collision for $H_2$
+      which prove that $H_4$ is collision resistant since $H_2$ is so.
+      Let's suppose that we have $x_1\|x_2 \neq y_1\|y_2$ are such that $H_4(x_1\|x_2) = H_4(y_1\|y_2)$.
+      \begin{itemize}
+        \item
+          If $H_2(x_1) \| H_2(x_1 \xor x_2) \neq H_2(y_1) \| H_2(y_1 \xor y_2)$,
+          we have a colision for $H_2$ since their image by $H_2$ is identical.
+        \item
+          If $H_2(x_1) \| H_2(x_1 \xor x_2) = H_2(y_1) \| H_2(y_1 \xor y_2)$,
+          we have $H_2(x_1) = H_2(y_1)$ \emph{and} $H_2(x_1 \xor x_2) = H_2(y_1 \xor y_2)$.
+          \begin{itemize}
+            \item If $x_1 \neq y_1$, we have a collision for $x_2$ since $H_2(x_1) = H_2(y_1)$.
+            \item If $x_1 = y_1$, then $x_2 \neq y_2$ since $x_1\|x_2 \neq y_1\|y_2$.
+              Therefore $x_1 \xor x_2 \neq y_1 \xor y_2$ and we have collision on $H_2$.
+          \end{itemize}
+      \end{itemize}
+    \item
+      $H_6$ is not collision resistant since $H_6(x_1\|x_2\|x_3) = H_6((x_1 \xor w)\|(x_2 \xor w)\|(x_3 \xor w))$
+      for all $w$.
+  \end{itemize}
+\end{solution}
+
+\begin{solution}
+  \begin{enumerate}
+    \item Encrypt all the DVDs with $K_\text{root}$ !
+    \item At the beginning of the DVD, encrypt a random key $K$ using $K_2$ and $K_3$ and encrypt all the content
+      $M$ of the DVD using $K$.
+      $K_1$ and $K_2$ are the keys assiciated to the 2 childs of the root.
+    \item
+      For every node $i$ on the path from the root to $r$, we must add an encryption of $K$ with the key of its child that is not in the path.
+      For example, if $r = 10$ and $n = 16$, we must include the bold keys,
+      so we will include the encryption of $K_7$ in a DVD which is quite something.
+      \begin{center}
+        \Tree [.{$K_{\text{root}} = K_1$}
+          [.{$\mathbf{K_2}$}
+            [.{$K_4$}
+              [.{$K_8$}
+                [.{0} ]
+                [.{1} ]
+              ]
+              [.{$K_9$}
+                [.{2} ]
+                [.{3} ]
+              ]
+            ]
+            [.{$K_5$}
+              [.{$K_{10}$}
+                [.{4} ]
+                [.{5} ]
+              ]
+              [.{$K_{11}$}
+                [.{6} ]
+                [.{7} ]
+              ]
+            ]
+          ]
+          [.{$K_3$}
+            [.{$K_6$}
+              [.{$\mathbf{K_{12}}$}
+                [.{8} ]
+                [.{9} ]
+              ]
+              [.{$K_{13}$}
+                [.{10} ]
+                [.{11} ]
+              ]
+            ]
+            [.{$\mathbf{K_7}$}
+              [.{$K_{14}$}
+                [.{12} ]
+                [.{13} ]
+              ]
+              [.{$K_{15}$}
+                [.{14} ]
+                [.{15} ]
+              ]
+            ]
+          ]
+        ]
+      \end{center}
+  \end{enumerate}
+\end{solution}
 \nosolution
-\nosolution
-\nosolution
-\nosolution
-\nosolution
-\nosolution
-\nosolution
-\nosolution
-\nosolution
+
+\begin{solution}
+  We build $H(m) = H_0(m)\|H_1(m)$.
+  If we have $m_1 \neq m_2$ such that $H(m_1) = H(m_2)$ then $H_0(m_1) = H_0(m_2)$ and
+  $H_1(m_1) = H_1(m_2)$ so the collision resistant hash function has a collision whichever it is.
+  However, $H$ is no more a compression function and we cannot use Merkle-Damg\aa{}rd.
+
+  The input of $H$ therefore cannot have arbitrary length but its input is twice the length of the output of $H_0$ and $H_1$
+  so it is twice the size of a tag.
+
+  The output of $\Mac_0$ and $\Mac_1$ are the size of a tag so we can use the tag
+  $H(\Mac_0(k,m)\|\Mac_1(k,m))$ for our Hash-MAC scheme.
+  If we are able to output an existential forgery $(m, t)$,
+  since $H$ is collision resistant, that means that we have found
+  $\Mac_0(k,m)\|\Mac_1(k,m)$ and therefore we have found an existantial forgery for both
+  $\Mac_0$ \emph{and} $\Mac_1$ which is absurd since one of them is believed to be unforgeable.
+
+  Our Hash-MAC scheme is therefore unforgeable.
+\end{solution}
+
 \nosolution
 \nosolution
 \nosolution

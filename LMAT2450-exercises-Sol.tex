@@ -9,6 +9,8 @@
 \usepackage{amsthm}
 \usepackage{verbatim}
 
+\usepackage{qtree}
+
 \usepackage{ifthen}
 \usepackage[framemethod=tikz]{mdframed}
 \usepackage{tikzpagenodes}
@@ -42,15 +44,22 @@ You are encouraged to submit one to the following address
 \end{center}
 or by mail to \url{benoit.legat@gmail.com}.\end{mysolution}}
 
+\newcommand{\xor}{\oplus}
+
 \newcommand{\A}{\mathcal{A}}
+\newcommand{\D}{\mathcal{D}}
 \newcommand{\C}{\mathcal{C}}
 \newcommand{\K}{\mathcal{K}}
 \newcommand{\M}{\mathcal{M}}
 \DeclareMathOperator{\Gen}{Gen}
 \DeclareMathOperator{\Enc}{Enc}
 \DeclareMathOperator{\Dec}{Dec}
+\DeclareMathOperator{\Mac}{Mac}
+\DeclareMathOperator{\Vrfy}{Vrfy}
 
 \DeclareMathOperator{\PrivK}{PrivK}
+\DeclareMathOperator{\MacForge}{MacForge}
+\newcommand{\PrivKeav}{\PrivK^{\text{eav}}}
 \newcommand{\PrivKmultcpa}{\PrivK^{\text{multcpa}}}
 
 \title{Solutions of the exercises of Cryptography}
