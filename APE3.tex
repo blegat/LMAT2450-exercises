@@ -1,7 +1,141 @@
 \newape
-\nosolution
-\nosolution
-\nosolution
+
+\begin{solution}
+  \begin{enumerate}
+    \item
+      To have $m^{ed} \equiv m \pmod{N}$,
+      it is sufficient to have $ed \equiv 1 \pmod{\varphi(N)}$.
+      To have this, we need $e$ relatively prime to $\varphi(N)$.
+
+      $\varphi(N) = (7-1)(11-1) = 60 = 2^235$
+      so the smallest $e$ we can take is $7$.
+    \item
+      To find $d$ such that $ed \equiv 1 \pmod{60}$ we
+      can use the extended Euclidean algorithm
+
+      \begin{align*}
+        60 & = 8 \cdot 7 + 4\\
+        7 & = 1 \cdot 4 + 3\\
+        4 & = 1 \cdot 3 + 1
+      \end{align*}
+      so
+
+      \begin{align*}
+        1 & = 4 - 1 \cdot 3\\
+          & = 2 \cdot 4 - 1 \cdot 7\\
+          & = 2 \cdot 60 - 17 \cdot 7.
+      \end{align*}
+      We can take $-17 \equiv 43 \pmod{60}$ for $d$.
+    \item
+      We have
+
+      \begin{align*}
+        c & \equiv 75^7 \pmod{77}\\
+          & \equiv (-2)^7 \pmod{77}\\
+          & \equiv -128 \pmod{77}\\
+          & \equiv 26 \pmod{77}.
+      \end{align*}
+    \item
+      Let's just verify it modulo $7$ and $11$ which is equivalent
+      according to the CRT
+
+      \begin{align*}
+        c^{43} & \equiv 26^{43} \pmod{7}\\
+               & \equiv (-2)^{7 \cdot \varphi(7) + 1} \pmod{7}\\
+               & \equiv -2 \pmod{7}\\
+               & \equiv 75 \pmod{7}
+      \end{align*}
+      and
+
+      \begin{align*}
+        c^{43} & \equiv 26^{43} \pmod{11}\\
+               & \equiv 4^{4 \cdot \varphi(11) + 3} \pmod{11}\\
+               & \equiv 4^{3} \pmod{11}\\
+               & \equiv 64 \pmod{11}\\
+               & \equiv -2 \pmod{11}\\
+               & \equiv 75 \pmod{11}.
+      \end{align*}
+  \end{enumerate}
+\end{solution}
+
+\begin{solution}
+  \begin{enumerate}
+    \item
+      \begin{enumerate}
+        \item
+          $\epsilon_7$ should be a multiple of $11$ so there is a $y$ such
+          that $\epsilon_7 = 11y$.
+          So we have
+
+          \begin{align*}
+            11y & \equiv 1 \pmod{7}\\
+              y & \equiv (11)^{-1} \pmod{7}\\
+                & \equiv 2 \pmod{7}
+          \end{align*}
+          which gives $\epsilon_7 \equiv 22 \pmod{77}$.
+        \item
+          $\epsilon_{11}$ should be a multiple of $7$ so there is a $y$ such
+          that $\epsilon_{11} = 7y$.
+          So we have
+
+          \begin{align*}
+            7y & \equiv 1 \pmod{11}\\
+             y & \equiv 7^{-1} \pmod{11}\\
+               & \equiv 8 \pmod{11}
+          \end{align*}
+          which gives $\epsilon_{11} \equiv 56 \pmod{77}$.
+        \item
+          By the superposition principle
+          \begin{align*}
+            5\epsilon_7 + 9\epsilon_{11} & \equiv 5 \pmod{7}\\
+            5\epsilon_7 + 9\epsilon_{11} & \equiv 9 \pmod{11}
+          \end{align*}
+          so $x \equiv 5 \cdot 22 + 9 \cdot 56 \equiv 75 \pmod{77}$.
+        \item
+          We can take $x_p\epsilon_7 + x_q\epsilon_{11}$
+          since by the superposition principle
+          \begin{align*}
+            x_p\epsilon_7 + x_q\epsilon_{11} & \equiv x_p \cdot 1 + x_q \cdot 0 \pmod{7}\\
+                                             & \equiv x_p \pmod{7}\\
+            x_p\epsilon_7 + x_q\epsilon_{11} & \equiv x_p \cdot 0 + x_q \cdot 1 \pmod{11}\\
+                                             & \equiv x_q \pmod{11}.
+          \end{align*}
+        \item
+          We can know that $\epsilon_p = qy$ for some $y$
+          So we have
+
+          \begin{align*}
+            qy & \equiv 1 \pmod{p}\\
+             y & \equiv q^{-1} \pmod{p}\\
+          \end{align*}
+          which gives $\epsilon_7 \equiv qq^{-1} \pmod{pq}$
+          where the inverse is taken modulo $p$.
+
+          This is the same for $\epsilon_q$.
+        \item
+          \[ \psi^{-1} : \mathbb{Z}_p \times \mathbb{Z}_q \to \mathbb{Z}_n; (x_p, x_q) \to x_p\epsilon_p + x_q\epsilon_q. \]
+      \end{enumerate}
+  \end{enumerate}
+\end{solution}
+
+\begin{solution}
+  \begin{enumerate}
+    \item
+      It is a subset of $\mathbb{Z}_p^*$ since $0$
+      cannot be the square of an element in $\mathbb{Z}_p^*$.
+
+      It is a group since if $x_1$ and $x_2$ are quadratic residues,
+      there exists $y_1,y_2$ such that
+      \begin{align*}
+        y_1^2 & \equiv x_1 \pmod{p}\\
+        y_2^2 & \equiv x_2 \pmod{p}
+      \end{align*}
+      so
+      \[ (y_1y_2)^2 \equiv x_1x_2 \pmod{p} \]
+      and $x_1x_2$ is also a quadratic residue.
+  \end{enumerate}
+\end{solution}
+
 \nosolution
 \nosolution
 \nosolution
