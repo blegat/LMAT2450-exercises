@@ -114,17 +114,9 @@
 
   An adversary $\A$ can output $b = 0$ iff all the $C_i$s are equals.
   We have
-  \[ \Pr[\PrivKeav_{\A,\text{ECB}}(nm)] = \frac{1}{2} + \frac{1-\epsilon(nm)}{2} \]
-  where $\epsilon(nn)$ is the probability that $C_1 = C_2 = \cdots = C_m$ when $b = 1$.
-  So $\epsilon(nm)$ is the probability that $F_k(M_1) = F_k(M_2) = \cdots = F_k(M_m)$.
-  However we know that $\epsilon(nm)$ is negligible and thefore $\frac{1-\epsilon(nm)}{2}$ is clearly non-negligible.
-
-  Indeed, if $\epsilon(nm)$ was non-negligible, we could build a simple distinguisher $\D$ for $F$.
-  We would pick $M_1, M_2, \ldots, M_m$ the same way as $\A$ and outputs $b = 1$ if we get all the same outputs.
-  For a random function $f$ the probability is $\left(\frac{1}{2^n}\right)^{m-1} = \frac{1}{2^{n(m-1)}}$
-  we would have
-  \[ |\Pr[\D^{F_k}(1^n) = 1] - \Pr[\D^f(1^n) = 1]| = \left|\epsilon(nm) - \frac{1}{2^{n(m-1)}}\right| \]
-  which would be non-negligible if $\epsilon(nm)$ was non-negligible.
+  \[ \Pr[\PrivKeav_{\A,\text{ECB}}(nm)] = \frac{1}{2} + \frac{1}{2} = 1 \]
+  since the $C_i$ cannot be equal if $b = 1$ since we use a PRP.
+  If two different $M_i$ were encrypted as same $C_i$, decryption wouldn't be possible.
 \end{solution}
 
 \begin{solution}
