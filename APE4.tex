@@ -1,6 +1,70 @@
 \newape
+\begin{solution}
+  \begin{description}
+    \item[computationally hiding]
+      It has to know whether $c \in \Ima(G)$ and whether $c \xor R \in \Ima(G)$.
+      This is easy to do with unbounded power so it is not perfectly hiding.
+
+      This is impossible to do in than $2^{n-1}$ with a random function.
+      If $\A(G,R)$ can find beat computational hiding,
+      we can build $\A'^g$ that gives $g^{s_1}$ to $\A$.
+      If $\A$ outputs 0, $\A'$ says that $g$ is a PRF and if $\A$ outputs 1,
+      that means that it is wrong so that may be because $g$ is a random function
+      so $\A'$ says that $g$ a random function.
+    \item[computationally biding]
+      It is not perfectly biding since we can loop over all $s$ of $\{0,1\}^n$ and find two $s_1,s_2$ such
+      that $G(s_1) \xor R = G(s_2)$.
+      This is $O(\sqrt{2^n})$ by the Birthday Paradox.
+
+      It is however computationally binding.
+      Let's suppose that $\A(G,R)$ can output $(c, (s_1,b_1), (s_2, b_2))$ such that
+      $G(s_1) \xor \langle b_1,R \rangle = c = G(s_2) \xor \langle b_2,R \rangle$.
+      This is impossible with a random function, the best we can do with random function is the technique described just below.
+
+      We can therefore build a distinguisher $\D$ which will give the function it is given to $\A$.
+      If succeeds, it concludes that it is a PRF, otherwise, it concludes that this is a random function.
+  \end{description}
+\end{solution}
+
 \nosolution
 \nosolution
-\nosolution
-\nosolution
-\nosolution
+
+\begin{solution}
+  No, they should use a commitment scheme.
+  As a commitment point of view, this scheme is perfectly hiding, bit it is not binding.
+  For example, if Bob has sent $c_{\text{bob}} := \mathsf{abraveboy} \xor k_{\text{bob}}$ and sees that it is a girl,
+  he can say that its key was $c_{\text{bob}} \xor \mathsf{acutegirl}$ and Alice will
+  compute $c_{\text{bob}} \xor (c_{\text{bob}} \xor \mathsf{acutegirl}) = \mathsf{acutegirl}$ and think that he guessed right.
+\end{solution}
+
+\begin{solution}
+  Let's show that $\A$ can break CDH, we can build $\A'$ that can break DDH.
+  \begin{itemize}
+    \item $\A'$ is given $\mathbb{G}, q, g, (g^x, g^y, h_b)$.
+    \item $\A'$ gives $\mathbb{G}, q, g, g^x, g^y$ to $\A$.
+    \item $\A'$ receives $h$ from $\A$.
+    \item If $h = h_b$, $\A'$ outputs 1, otherwise, it outputs 0.
+  \end{itemize}
+  Let's analyse our probability of breaking DDH
+  \begin{itemize}
+    \item
+      If $\A$ succeeds in finding $h = g^{xy}$ the only think that could go wrong
+      is if the random $z = xy$ (probability of $1/q$) when $b = 0$ (probability of $1/2$).
+    \item
+      Even if $\A$ loses and
+      \begin{itemize}
+        \item $b = 0$, we win if $g^z \neq h$ which happens with probability $1-1/q$;
+        \item $b = 1$, we lose.
+      \end{itemize}
+  \end{itemize}
+  In conclusion,
+
+  \begin{align*}
+    \Pr[\DDH_{\A',\G}(n) = 1]
+    & = \Pr[\DDH_{\A',\G}(n) = 1]\left(1 - \frac{1}{2q}\right)\\
+    & \quad + (1 - \Pr[\DDH_{\A',\G}(n) = 1])\left(\frac{1}{2}-\frac{1}{2q}\right)\\
+    & = \frac{1}{2} + \frac{\Pr[\DDH_{\A',\G}(n) = 1]}{2} - \frac{1}{2q}
+  \end{align*}
+  where $\frac{\Pr[\DDH_{\A',\G}(n) = 1]}{2} - \frac{1}{2q}$ is non-negligible if $\Pr[\DDH_{\A',\G}(n) = 1]$
+  is non-negligible.
+\end{solution}
