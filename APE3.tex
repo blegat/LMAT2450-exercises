@@ -11,7 +11,7 @@
       so the smallest $e$ we can take is $7$.
     \item
       To find $d$ such that $ed \equiv 1 \pmod{60}$ we
-      can use the extended Euclidean algorithm
+      can use the extended Euclidean algorithm \footnote{A good explaination can be found at \url{https://www.youtube.com/watch?v=fz1vxq5ts5I}}
 
       \begin{align*}
         60 & = 8 \cdot 7 + 4\\
@@ -91,31 +91,30 @@
             5\epsilon_7 + 9\epsilon_{11} & \equiv 9 \pmod{11}
           \end{align*}
           so $x \equiv 5 \cdot 22 + 9 \cdot 56 \equiv 75 \pmod{77}$.
-        \item
-          We can take $x_p\epsilon_7 + x_q\epsilon_{11}$
-          since by the superposition principle
-          \begin{align*}
-            x_p\epsilon_7 + x_q\epsilon_{11} & \equiv x_p \cdot 1 + x_q \cdot 0 \pmod{7}\\
-                                             & \equiv x_p \pmod{7}\\
-            x_p\epsilon_7 + x_q\epsilon_{11} & \equiv x_p \cdot 0 + x_q \cdot 1 \pmod{11}\\
-                                             & \equiv x_q \pmod{11}.
-          \end{align*}
-        \item
-          We can know that $\epsilon_p = qy$ for some $y$
-          So we have
+        \end{enumerate}
+      \item
+        We can take $x_p\epsilon_7 + x_q\epsilon_{11}$
+        since by the superposition principle
+        \begin{align*}
+          x_p\epsilon_7 + x_q\epsilon_{11} & \equiv x_p \cdot 1 + x_q \cdot 0 \pmod{7}\\
+                                           & \equiv x_p \pmod{7}\\
+          x_p\epsilon_7 + x_q\epsilon_{11} & \equiv x_p \cdot 0 + x_q \cdot 1 \pmod{11}\\
+                                           & \equiv x_q \pmod{11}.
+        \end{align*}
+      \item
+        We can know that $\epsilon_p = qy$ for some $y$.
+        So we have
+        \begin{align*}
+          qy & \equiv 1 \pmod{p}\\
+           y & \equiv q^{-1} \pmod{p}\\
+        \end{align*}
+        which gives $\epsilon_7 \equiv qq^{-1} \pmod{pq}$
+        where the inverse is taken modulo $p$.
 
-          \begin{align*}
-            qy & \equiv 1 \pmod{p}\\
-             y & \equiv q^{-1} \pmod{p}\\
-          \end{align*}
-          which gives $\epsilon_7 \equiv qq^{-1} \pmod{pq}$
-          where the inverse is taken modulo $p$.
-
-          This is the same for $\epsilon_q$.
-        \item
-          \[ \psi^{-1} : \mathbb{Z}_p \times \mathbb{Z}_q \to \mathbb{Z}_n; (x_p, x_q) \to x_p\epsilon_p + x_q\epsilon_q. \]
-      \end{enumerate}
-  \end{enumerate}
+        This is the same for $\epsilon_q$.
+      \item
+        \[ \psi^{-1} : \mathbb{Z}_p \times \mathbb{Z}_q \to \mathbb{Z}_n; (x_p, x_q) \to x_p\epsilon_p + x_q\epsilon_q. \]
+    \end{enumerate}
 \end{solution}
 
 \begin{solution}

@@ -192,9 +192,10 @@
 \begin{solution}
   \begin{enumerate}
     \item Encrypt all the DVDs with $K_\text{root}$ !
-    \item At the beginning of the DVD, encrypt a random key $K$ using $K_2$ and $K_3$ and encrypt all the content
-      $M$ of the DVD using $K$.
-      $K_1$ and $K_2$ are the keys assiciated to the 2 childs of the root.
+    \item At the beginning of the DVD, encrypt a random key $K$ twice (using $K_2$ and then $K_3$): $Enc_{K_2}(K)$ and $Enc_{K_3}(K)$. 
+
+      We then encrypt all the content $M$ of the DVD using $K$. (We suppose $K_1$ is $K_root$)
+      $K_2$ and $K_3$ are the keys associated to the 2 childs of the root.
     \item
       For every node $i$ on the path from the root to $r$, we must add an encryption of $K$ with the key of its child that is not in the path.
       For example, if $r = 10$ and $n = 16$, we must include the bold keys,
@@ -323,9 +324,18 @@
 \end{solution}
 
 \begin{solution}
+  This scheme is not secure:
+
+  We can define the cipher as $Enc_k(m_1, m_2) = C = c_1\| c_2 \| c_3 = p_k(IV\xor m_1) \| p_k(m_2 \xor p_k(IV\xor m_1)) \| p_k(m_3 \xor p_k(m_2 \xor p_k(IV\xor m_1)))$.
+  $IV = 0^n$ so we know that $c_1 = p_k(m_1)$, using the inverse of $p_k$ (assumed known by the exercice), 
+  we can retrieve $m_1$. We can also retrieve $m_2 \xor c_1$ using the same method. 
+  The last block (encrypthing $r$) is not really interresting as we've already retrieved 
+  the messages. The solution to protect the scheme is to put the $r$ block at first.
+
+\paragraph{Note: }
   Since $r$ is not outputted by the encryption, this is not an encryption scheme.
   Indeed, $\Enc$ is not injective so we cannot define $\Dec$.
-  For exemple, the decryption of $p_k(0)$ could be any $m_1\|m_2$ because
+  For example, the decryption of $p_k(0)$ could be any $m_1\|m_2$ because
   if $r = p_k(p_k(m_1) \xor m_2)$,
 
   \begin{align*}
@@ -334,6 +344,7 @@
   \end{align*}
 
   I guess this solution is not the expected one so if someone could tell me what I should do, that would be nice.
+
 \end{solution}
 
 \begin{solution}
@@ -348,5 +359,6 @@
     \item We can simply take all $S_i$ having 2 elements.
       $S_i \subseteq S_j$ simplifies therefore in $S_i \neq S_j$.
       There are ${5 \choose 2} = \frac{5!}{2! \cdot 3!} = 10$ possible such sets.
+      %Sure ? Because I think in this case B_k would be allowed to sign packets to other users haveing k_k in his set. No ?
   \end{enumerate}
 \end{solution}
