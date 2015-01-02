@@ -68,9 +68,8 @@
 
     \item
       Another simpler solution is possible. Using the first Hint, we can say that if $F_k$ is a PRF, it has a maximum of $2^n$ possible outputs 
-      where a truly random function has exactly $2^n$. So if $\Pi$ is secured with a PRF, then $\tilde{\Pi}$ is also secure because 
-      $\epsilon_{\tilde{\Pi}}  = \frac{1}{2^n} \geq \epsilon_{\Pi}$. We then can play the PRF game to prove the security with the second hint.
-
+      where a truly random function has exactly $2^n$ outputs. So if we suppose $\Pi$ secure with a PRF, then $\tilde{\Pi}$ is also secure because 
+      $\epsilon_{\tilde{\Pi}}  = \frac{1}{2^n} \geq \epsilon_{\Pi}$. We then can play the PRF game to prove the security of $\Pi$ with the second hint.
   \end{itemize}
 
 \end{solution}
