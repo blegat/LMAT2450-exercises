@@ -192,9 +192,9 @@
 \begin{solution}
   \begin{enumerate}
     \item Encrypt all the DVDs with $K_\text{root}$ !
-    \item At the beginning of the DVD, encrypt a random key $K$ twice (using $K_2$ and then $K_3$): $Enc_{K_2}(K)$ and $Enc_{K_3}(K)$. 
+    \item At the beginning of the DVD, encrypt a random key $K$ twice (using $K_2$ and then $K_3$): $Enc_{K_2}(K)$ and $Enc_{K_3}(K)$.
 
-      We then encrypt all the content $M$ of the DVD using $K$. (We suppose $K_1$ is $K_root$)
+      We then encrypt all the content $M$ of the DVD using $K$. (We suppose $K_1$ is $K_{\text{root}}$)
       $K_2$ and $K_3$ are the keys associated to the 2 childs of the root.
     \item
       For every node $i$ on the path from the root to $r$, we must add an encryption of $K$ with the key of its child that is not in the path.
