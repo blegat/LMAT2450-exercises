@@ -77,9 +77,9 @@
 
 \begin{solution}
   $\A$ can ask for the tag of any message $m_1$.
-  Once he has received $t_1 = H^s(k\|m)$ he can compute
-  $t = H^s(k\|m_1\||m_1|\|w)$ for any $w$.
-  It is simply $H^s(w)$ computed with $t_1$ as IV.
+  Once he has received $t_1 = H^s(k\|m_1)$ he can compute
+  $t = H^s(k\|m_1\||m_1|\|w) = H^s(H^s(k\|m_1)\|w)$ for any $w$.
+  $t$ is simply $H^s(w)$ computed with $t_1$ as IV.
 \end{solution}
 
 \begin{solution}
