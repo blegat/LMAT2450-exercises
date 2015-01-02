@@ -76,10 +76,18 @@
 \end{solution}
 
 \begin{solution}
-  $\A$ can ask for the tag of any message $m_1$.
-  Once he has received $t_1 = H^s(k\|m_1)$ he can compute
-  $t = H^s(k\|m_1\||m_1|\|w) = H^s(H^s(k\|m_1)\|w)$ for any $w$.
-  $t$ is simply $H^s(w)$ computed with $t_1$ as IV.
+  If we have the tag of $p$, which is (let's consider that $k$ and $p$ are $l$ bits long for simplicity)
+  \[ t_p = H^s(k\|p) = h^s(h^s(h^s(h^s(IV \| k) \| p)), l) \]
+  we can find the tag of $p\|l\|w$ (where $w$ is $l$ bits long for simplicity)
+  without knowing $k$ since we know $h^s$.
+  It is
+  \begin{align*}
+    H^s(k\|p\||p|\|w)
+    & = h^s(h^s(h^s(h^s(h^s(h^s(IV \| k) \| p)) \| l) \| w) \| 3l)\\
+    & = h^s(h^s(H^s(k \| p) \| w) \| 3l)\\
+    & = h^s(h^s(t_p \| w) \| 3l)
+  \end{align*}
+  Since $p\|l\|w \neq p$, this gives us an existential forgery.
 \end{solution}
 
 \begin{solution}
