@@ -28,7 +28,7 @@
         \Pr[K = k | C = c]
         & = \Pr[c - M \equiv k \pmod{n}]\\
         & = \Pr[M \equiv c - k \pmod{n}]\\
-        & = {n-1 \choose m} p^{c-k} (1-p)^{n-1-c+k}.
+        & = {n-1 \choose c-k} p^{c-k} (1-p)^{n-1-c+k}.
       \end{align*}
   \end{enumerate}
 \end{solution}
@@ -54,6 +54,7 @@
       $p(n) \leq n^d \sum_{i=0}^d|a_i|$.
       Taking the logarithm on both side (we can do it since the logarithm is strictly increasing),
       we have
+	%Why ? Can you explain this operation ?
       \[ \log^2(n) - d \log(n) - \log\sum_{i=0}^d|a_i| \geq 0 \]
       which is a second order polynomial in $\log(n)$.
       Let $r_1,r_2$ be its roots.
@@ -68,10 +69,11 @@
   The size of the input is the number of bits of $n$.
   Let's says, it is $k$.
   The best complexity we can achieve is therefore
-  $\lfloor2^{k/2}\rfloor$ which is not efficient.
+  $\lfloor2^{k/2}\rfloor$ which is not efficient (An algorith is said to be efficient if it's executed in a polynomial amount of steps).
 \end{solution}
 
 \begin{solution}
+%Sending it once (in a vector) or with a loop is exactly the same, so I think only one definition is sufficient...
   Two definition can be proposed.
   The first one is the one given in the reference \cite[p.~84]{katz2007introduction}.
 
@@ -86,6 +88,7 @@
   The proof is very similar to the proof we have to make to show the equivalence so if you are in doubt, just check it out.
 
   \begin{enumerate}
+
     \item
       $\Pi := \langle\Gen, \Enc, \Dec\rangle$ has indisguishable \emph{multiple} encryption under a chosen-plaintext attack
       if $\forall$ PPT $\A$, $\exists \epsilon$:
@@ -100,6 +103,8 @@
         \item $\A$ output $b'$
         \item Define $\PrivKmultcpa_{\A,\Pi}(n) := 1$ iff $b = b'$
       \end{enumerate}
+	
+
     \item
       $\Pi := \langle\Gen, \Enc, \Dec\rangle$ has indisguishable \emph{multiple} encryption under a chosen-plaintext attack
       if $\forall$ PPT $\A$, $\exists \epsilon$:
@@ -136,7 +141,7 @@
     \item $\A$ is given $1^n$ as input
     \item
       \begin{itemize}
-        \item $\A'$ gives $1^n$ as input for $\A'$
+        \item $\A'$ gives $1^n$ as input for $\A$
         \item $\A'$ outputs $m_0, m_1$
       \end{itemize}
     \item $\A$ outputs $m_0, m_1$
