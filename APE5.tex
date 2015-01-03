@@ -1,10 +1,64 @@
 \newape
-\nosolution
-\nosolution
-\nosolution
-\nosolution
-\nosolution
-\nosolution
-\nosolution
-\nosolution
-\nosolution
+\begin{solution}
+  Let assume that f is not one way function $y = f(x)$.
+  Then, we can recover $x$ with a non negligible probability $\epsilon_x (n)$.
+  
+  So, $(y_0, y_1) \Rightarrow (x_0, x_1)$ with probabilities $(\epsilon_{x_0} (n), \epsilon_{x_1} (n))$.
+  We cannot compute a pre-image by asking the oacle I. So I output $(0, x_1)$ and $(1, x_2)$ as a forgery.
+
+  The probability $Pr[Forge(y)] = 2\epsilon(n)$, non-negiligble since f is not one way.
+\end{solution}
+\begin{solution}
+  \begin{enumerate}
+    \item
+      A has $(i, \sigma(i))$ whith $\sigma (i) = f^{n-i} (x)$. We know (because $f$ is a permutation function) that:
+      $$f(\sigma(i)) = f^{n-i+1}(x) = f^{n-(i-1)}(x) = \sigma(i-1)(x)$$
+      Then it's possible to compute a valid forgery for every $j < i$. The scheme is then not a one time-signature.
+    \item
+      Need schema drawn at TP !! It's a lot simpler with it...
+
+      $Pr[Success (A_\sigma)] = \epsilon(\lambda))$, $Pr[Abort] = \frac{n-k}{n}$, $Pr[Success] = \frac{n-k}{n-m-1}$ then:
+      $$ Pr[Success(A_{owf})] = \epsilon(\lambda) \frac{n-k}{n} \frac{n-k}{n-m-1}$$
+
+      If $\epsilon(\lambda)$ is not negligible, then the probability of success is not negligible.
+    \item
+      We have $s_k = (x, x')$, $p_k = (f^n(x), f^n(x'))$.
+      Then $m \rightarrow \sigma = (f^{n-m}(x), f^m(x'))$.
+      
+  \end{enumerate}
+\end{solution}
+\begin{solution}
+  \begin{enumerate}
+    \item
+      $(r, s) = ([g^k \pmod{p}] \pmod{q}, [H(m) + xr]k^{-1} \pmod{q})$, then:
+      $u_1 = H(m)s^{-1} \pmod{q}$,  $u_2 = rs^{-1} \pmod{q}$, $r = [g^{u_1} g^{u_2} \pmod{p}] \pmod{q}$, $y = g^x$
+      
+      $$\Rightarrow g^{u_1 + xu_2} = g^{s^{-1}(H(m) + rx)} = [g^k \pmod{p}] \pmod{q} = r$$
+    \item
+      $s = (H(m) + xr)k^{-1} \pmod{q}$, $s' = (H(m') + xr)k^{-1} \pmod{q}$ ($s \neq s'$ otherwise we have a collision).
+      $s - s' = (H(m) - H(m'))k^{-1} \pmod{q}$, $k = \frac{H(m) - H(m')}{s - s'}$.
+      $s = (H(m) + xr)k^{-1}$ so $\frac{sk - H(m)}{r} = x$ where x is the secret.
+  \end{enumerate}
+\end{solution}
+\begin{solution}
+ape7
+
+\end{solution}
+
+
+% Next are copies of ape 4
+\begin{solution}
+See APE4, exercice 1
+\end{solution}
+\begin{solution}
+See APE4, exercice 2
+\end{solution}
+\begin{solution}
+See APE4, exercice 3
+\end{solution}
+\begin{solution}
+See APE4, exercice 4
+\end{solution}
+\begin{solution}
+See APE4, exercice 5
+\end{solution}
