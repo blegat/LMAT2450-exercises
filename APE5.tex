@@ -1,12 +1,33 @@
 \newape
 \begin{solution}
-  Let assume that f is not one way function $y = f(x)$.
-  Then, we can recover $x$ with a non negligible probability $\epsilon_x (n)$.
+  Two solution have been proposed
+  \begin{itemize}
+    \item
+      Let's show that if $f$ is not one way, then $\Pi$ is not existentially unforgeable.
+      Let $\A$ be the inverter of $f$, we will build $\A'$ that builds an existential forgery with non-negligible probability.
 
-  So, $(y_0, y_1) \Rightarrow (x_0, x_1)$ with probabilities $(\epsilon_{x_0} (n), \epsilon_{x_1} (n))$.
-  We cannot compute a pre-image by asking the oacle I. So I output $(0, x_1)$ and $(1, x_2)$ as a forgery.
+      \begin{itemize}
+        \item $\A'$ receives $pk = (y_0, y_1)$
+        \item $\A'$ ask the signature of 0 and gets $\sigma$, he does not really care about it
+        \item $\A'$ gives $y_1$ to $\A$ which outputs $x_1'$
+        \item $\A'$ outputs $(1, x_1')$
+      \end{itemize}
+      Since $y_1$ is the image of a random $x_1$, we are exactly in the inverting experiment so $f(x_1') = y_1$
+      whith probability $\Pr[\Invert_{\A,f}(n) = 1]$.
 
-  The probability $Pr[Forge(y)] = 2\epsilon(n)$, non-negiligble since f is not one way.
+      We know that
+      \[
+        \Pr[\Sigforge_{\A',\Pi}^{\text{1--time}}(n) = 1] = \Pr[\Invert_{\A,f}(n) = 1]
+      \]
+    \item
+      Let assume that $f$ is not one way function $y = f(x)$.
+      Then, we can recover $x$ with a non negligible probability $\epsilon_x (n)$.
+
+      So, $(y_0, y_1) \Rightarrow (x_0, x_1)$ with probabilities $(\epsilon_{x_0} (n), \epsilon_{x_1} (n))$.
+      We cannot compute a pre-image by asking the oracle. So I output $(0, x_1)$ and $(1, x_2)$ as a forgery.
+
+      The probability $\Pr[\Sigforge(y)] = 2\epsilon(n)$, non-negligible since f is not one way.
+  \end{itemize}
 \end{solution}
 \begin{solution}
   \begin{enumerate}
