@@ -197,17 +197,23 @@
       and
       \[ \varphi(0) = (0,0) = (1,0) \cdot (0,1). \]
     \item           
-      We have: $\epsilon_p = q(q^{-1} mod p$ and $\epsilon_q = p(p^{-1} mod q$, so, $\epsilon_p + \epsilon_q = q(q^{-1} mod p) + p(p^{-1} mod q)$ where p and q are relatively prime.
-      And also $\epsilon_p + \epsilon_q = q u + p v$ where u and v are the inverses of p (resp q). We have $q u + p v = 1 mod pq$ (see Bézout theorem).
-      We also have $\epsilon_p \epsilon_q = pq(q^{-1} mod p)(p^{-1} mod q) = 0 mod pq$. Whe then have a generalization:
+      We have: $\epsilon_p = q(q^{-1} \pmod{p}$ and $\epsilon_q = p(p^{-1} \pmod{q}$, so, $\epsilon_p + \epsilon_q = q(q^{-1} \pmod{p}) + p(p^{-1} \pmod{q})$ where p and q are relatively prime.
+      
+
+      And also $\epsilon_p + \epsilon_q = q u + p v$ where u and v are the inverses of p (resp q). We have $q u + p v = 1 \pmod{pq}$ (see Bézout theorem).
+      We also have $\epsilon_p \epsilon_q = pq(q^{-1} \pmod{p})(p^{-1} \pmod{q}) = 0 \pmod{pq}$. Whe then have a generalization:
+
 
       Finally: $\varphi(1) = (1, 1)$ and $\varphi(0) = (0, 0)$.
 
     \item
       For the sum whe have: $x = k_1 p + x_p$ and $y = k_2 p + yp$, then whe have $x + y = p(k_1 + k_2) + (x_p + y_p)$.
-      For the multiplication: $\varphi(x)\varphi(y) = (x_p, x_q)(y_p, y_q) = (x_p y_p, x_qy_q) = ((xy)_p, (xy)_q) = \varphi(xy)$.
 
+
+      For the multiplication: $\varphi(x)\varphi(y) = (x_p, x_q)(y_p, y_q) = (x_p y_p, x_qy_q) = ((xy)_p, (xy)_q) = \varphi(xy)$.
   \end{enumerate}
+
+
   The decryption can take advantage of it since it knows $p$ and $q$.
 \end{solution}
 
