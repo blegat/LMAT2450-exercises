@@ -5,12 +5,11 @@
       It has to know whether $c \in \Ima(G)$ and whether $c \xor R \in \Ima(G)$.
       This is easy to do with unbounded power so it is not perfectly hiding.
 
-      This is impossible to do in than $2^{n-1}$ with a random function.
-      If $\A(G,R)$ can find beat computational hiding,
-      we can build $\A'^g$ that gives $g^{s_1}$ to $\A$.
+      This is impossible to do in less than $2^{n-1}$ with a random function.
+      If $\A(G,R)$ can beat computational hiding, we can build $\A'^g$ that gives $g^{s_1}$ to $\A$.
       If $\A$ outputs 0, $\A'$ says that $g$ is a PRF and if $\A$ outputs 1,
       that means that it is wrong so that may be because $g$ is a random function
-      so $\A'$ says that $g$ a random function.
+      so $\A'$ says that $g$ is a random function.
     \item[computationally biding]
       It is not perfectly biding since we can loop over all $s$ of $\{0,1\}^n$ and find two $s_1,s_2$ such
       that $G(s_1) \xor R = G(s_2)$.
