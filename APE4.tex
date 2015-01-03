@@ -25,7 +25,26 @@
   \end{description}
 \end{solution}
 
-\nosolution
+\begin{solution}
+  \begin{enumerate}
+    \item %% Very bad explaination, can you help ?
+      $c = m^b r^2$ with $m$ and $r^2 \in QR(N)$. So we can say $c = (\sqrt{m}r)$ if $b = 1$, $c = r^2$ if $b = 0$. We cannot distinguish $\sqrt{m}r$ and $r$.
+    \item  
+      Because it's perfectly hiding, it cannot be perfectly binding. So we may suppose that it's computationnaly binding, otherwise it would be idiot to use it.
+      
+      $c = (\sqrt{m}r')^2$ and we know that finding a root in $Z^*_q$ is hard so we can say that it's computationnaly binding.
+    \item
+      No because if he choose $m$, he can choose it knowing $\sqrt{m}$ so he would be allowed to change the commit.
+    \item
+      If $m \not{\in} QR(N)$, then $c$ is not square for every $m$ so it becomes easy to determine $b$ by only checking if $c$ is square or not.
+    \item
+      We cannot in polynomial time.
+    \item
+      TODO
+  \end{enumerate}
+\end{solution}
+
+
 \nosolution
 
 \begin{solution}
