@@ -324,15 +324,15 @@
 \end{solution}
 
 \begin{solution}
-  This scheme is not secure:
-
-  We can define the cipher as $Enc_k(m_1, m_2) = C = c_1\| c_2 \| c_3 = p_k(IV\xor m_1) \| p_k(m_2 \xor p_k(IV\xor m_1)) \| p_k(m_3 \xor p_k(m_2 \xor p_k(IV\xor m_1)))$.
-  $IV = 0^n$ so we know that $c_1 = p_k(m_1)$, using the inverse of $p_k$ (assumed known by the exercice), 
-  we can retrieve $m_1$. We can also retrieve $m_2 \xor c_1$ using the same method. 
-  The last block (encrypthing $r$) is not really interresting as we've already retrieved 
-  the messages. The solution to protect the scheme is to put the $r$ block at first.
-
-\paragraph{Note: }
+%   This scheme is not secure:
+%
+%   We can define the cipher as $Enc_k(m_1, m_2) = C = c_1\| c_2 \| c_3 = p_k(IV\xor m_1) \| p_k(m_2 \xor p_k(IV\xor m_1)) \| p_k(m_3 \xor p_k(m_2 \xor p_k(IV\xor m_1)))$.
+%   $IV = 0^n$ so we know that $c_1 = p_k(m_1)$, using the inverse of $p_k$ (assumed known by the exercice),
+%   we can retrieve $m_1$. We can also retrieve $m_2 \xor c_1$ using the same method.
+%   The last block (encrypthing $r$) is not really interresting as we've already retrieved
+%   the messages. The solution to protect the scheme is to put the $r$ block at first.
+%
+% \paragraph{Note: }
   Since $r$ is not outputted by the encryption, this is not an encryption scheme.
   Indeed, $\Enc$ is not injective so we cannot define $\Dec$.
   For example, the decryption of $p_k(0)$ could be any $m_1\|m_2$ because
