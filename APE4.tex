@@ -5,12 +5,11 @@
       It has to know whether $c \in \Ima(G)$ and whether $c \xor R \in \Ima(G)$.
       This is easy to do with unbounded power so it is not perfectly hiding.
 
-      This is impossible to do in than $2^{n-1}$ with a random function.
-      If $\A(G,R)$ can find beat computational hiding,
-      we can build $\A'^g$ that gives $g^{s_1}$ to $\A$.
+      This is impossible to do in less than $2^{n-1}$ with a random function.
+      If $\A(G,R)$ can beat computational hiding, we can build $\A'^g$ that gives $g^{s_1}$ to $\A$.
       If $\A$ outputs 0, $\A'$ says that $g$ is a PRF and if $\A$ outputs 1,
       that means that it is wrong so that may be because $g$ is a random function
-      so $\A'$ says that $g$ a random function.
+      so $\A'$ says that $g$ is a random function.
     \item[computationally biding]
       It is not perfectly biding since we can loop over all $s$ of $\{0,1\}^n$ and find two $s_1,s_2$ such
       that $G(s_1) \xor R = G(s_2)$.
@@ -29,11 +28,14 @@
 \begin{solution}
   \begin{enumerate}
     \item
-      This scheme is perfectly hiding because $r$ is randomly chosen from
-      $Z^{*}_{N}$ and because $c(0) = r^{2}$ is in $Z^{*}_{N}$ and $c(1) = mr^{2}$ is in
-      $QR(N)$ which is a subgroup of $Z^{*}_{N}$.
-      Further more both $c(0)$ and $c(1)$ are random elements of $QR(n)$.
+      This scheme is perfectly hiding.
+      $r$ is picked at random uniformly in $\mathbb{Z}_N^*$
+      so $c(0) = r^{2}$ is uniformly distributed in $QR(N)$ since each element of $QR(N)$ has the same number of roots.
+      $c(1) = mr^{2}$ is also uniformly distributed in $QR(N)$
+      since this is a subgroup of $\mathbb{Z}_N^*$.
+      Therefore both $c(0)$ and $c(1)$ are random elements uniformly distributed in $QR(N)$.
     \item
+      Because it's perfectly hiding, it cannot be perfectly binding.
       If there is a PPT adversary $\A$ that can find with non-negligible probability
       $r_{0}$, $r_{1}$ such that $\Open(c, (r_{0}, 0))=0$ and
       $\Open(c, (r_{1}, 1))=1$. This would mean that
@@ -42,7 +44,7 @@
       As seen from exercise~5 of APE3, this means that we can factor $N$.
 
       Therefore, under the assumption that factoring $N$ is hard, the scheme is computationally binding.
-    \item
+    \item  
       If the commiter choose $m$, he has the factorisation of $N$ so it is not binding.
       As we have seen in exercise~3 of APE3, we can find the square root of $m$ modulo $p$ and $q$
       and using the CRT, we obtains its square root modulo $m$.
