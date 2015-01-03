@@ -28,11 +28,20 @@
   \end{enumerate}
 \end{solution}
 \begin{solution}
-ape6
-
+  \begin{enumerate}
+    \item
+      $(r, s) = ([g^k \pmod{p}] \pmod{q}, [H(m) + xr]k^{-1} \pmod{q})$, then:
+      $u_1 = H(m)s^{-1} \pmod{q}$,  $u_2 = rs^{-1} \pmod{q}$, $r = [g^{u_1} g^{u_2} \pmod{p}] \pmod{q}$, $y = g^x$
+      
+      $$\Rightarrow g^{u_1 + xu_2} = g^{s^{-1}(H(m) + rx)} = [g^k \pmod{p}] \pmod{q} = r$$
+    \item
+      $s = (H(m) + xr)k^{-1} \pmod{q}$, $s' = (H(m') + xr)k^{-1} \pmod{q}$ ($s \neq s'$ otherwise we have a collision).
+      $s - s' = (H(m) - H(m'))k^{-1} \pmod{q}$, $k = \frac{H(m) - H(m')}{s - s'}$.
+      $s = (H(m) + xr)k^{-1}$ so $\frac{sk - H(m)}{r} = x$ where x is the secret.
+  \end{enumerate}
 \end{solution}
 \begin{solution}
-ape6
+ape7
 
 \end{solution}
 
