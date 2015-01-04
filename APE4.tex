@@ -44,7 +44,7 @@
       As seen from exercise~5 of APE3, this means that we can factor $N$.
 
       Therefore, under the assumption that factoring $N$ is hard, the scheme is computationally binding.
-    \item  
+    \item
       If the commiter choose $m$, he has the factorisation of $N$ so it is not binding.
       As we have seen in exercise~3 of APE3, we can find the square root of $m$ modulo $p$ and $q$
       and using the CRT, we obtains its square root modulo $m$.
@@ -103,7 +103,43 @@
   \end{enumerate}
 \end{solution}
 
-\nosolution
+\begin{solution}
+  \begin{enumerate}
+    \item
+      We define $\langle \Gen, \Com, \Open \rangle$ as:
+      \begin{itemize}
+        \item $\Gen(1^n, 1^l)$ sets $pk$ as $(p,q,g)$ where $q > 2^l$ ang $g$ has order $q$ modulo $p$ (since $\phi(p)$ is even, that means that $g \in QR(p)$).
+        \item $\Com_{pk}(x_1, \ldots, x_n)$ provides $(c,d)$ where:
+          \begin{itemize}
+            \item $c := g^r g_1^{x_1} g_2^{x_2} \cdots g_n^{x_n}$ (for a random $r \in \mathrm{Z}_q$)
+            \item $d := r$
+          \end{itemize}
+        \item $\Open_{pk}(c,d)$ outputs $x_1, \ldots, x_n$ if it can recompute $c$ from $d$ and $pk$,
+          or $\perp$ otherwise.
+      \end{itemize}
+      We can see that there are different possible $x_1, \ldots, x_n$ that are valid.
+      If we fix $x_2, \ldots, x_n$,
+      there is an $x_1$ such that $g_1^{x_1} = c / (g^r g_2^{x_2} \cdots g_n^{x_n})$
+      so there is $q^n$ possible opening.
+      However, it is not easy to find for a PPT algorithm.
+
+      I should maybe have defined $d := (r, x_1, \ldots, x_n)$ because here it is weird because $\Open$ can have different outputs.
+    \item
+      For a random $\alpha$, we need to find it from $g^\alpha$.
+
+      Pick a random $i^*$ and set $g_{i^*} = g^\alpha$ and for $i \neq i^*$, random $\alpha_i$ and $g_i = g^{\alpha_i}$.
+      From $g^rg_1^{x_1} \cdots g_n^{x_n} = g^{r'}g_1^{x_1'} \cdots g_n^{x_n'}$ we get
+      \[ r + \alpha_1 x_1 + \cdots + \alpha_n x_n \equiv r' + \alpha_1 x_1' + \cdots + \alpha_n x_n' \pmod{q} \]
+      so we get
+      \[ (x_{i^*} - x_{i^*}') \alpha \equiv r' - r + \sum_{i \neq i^*}^n (x_i' - x_i) \alpha_i \pmod{q} \]
+      We know that at least one $x_i \neq x_i'$ so we have at least one chance out of $q$ that $x_{i^*} \not\equiv x_{i^*}' \pmod{q}$.
+      If this is the case, we can find the invers of $(x_{i^*} - x_{i^*}')$ and solve the $\DLog$ problem.
+    \item
+      Thanks to $r$, the commitment is uniformly distributed in $G$.
+
+      The size is $n$ times smaller.
+  \end{enumerate}
+\end{solution}
 
 \begin{solution}
   No, they should use a commitment scheme.
