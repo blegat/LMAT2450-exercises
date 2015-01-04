@@ -186,6 +186,14 @@
     \item
       $H_6$ is not collision resistant since $H_6(x_1\|x_2\|x_3) = H_6((x_1 \xor w)\|(x_2 \xor w)\|(x_3 \xor w))$
       for all $w$.
+      Indeed, since $\xor$ is associative and commutative,
+      \begin{align*}
+        & = H_6((x_1 \xor w)\|(x_2 \xor w)\|(x_3 \xor w))
+        & = H_3(H2((x_1 \xor w) \xor (x_2 \xor w))\|H2((x_2 \xor w) \xor (x_3 \xor w))\|H2((x_3 \xor w) \xor (x_1 \xor w)))
+        & = H_3(H2(x_1 \xor (w \xor w) \xor x_2)\|H2(x_2 \xor (w \xor w) \xor x_3)\|H2(x_3 \xor (w \xor w) \xor x_1)))
+        & = H_3(H2(x_1 \xor x_2)\|H2(x_2 \xor x_3)\|H2(x_3 \xor x_1)))\\
+        & = H_6(x_1\|x_2\|x_3).
+      \end{align*}
   \end{itemize}
 \end{solution}
 
