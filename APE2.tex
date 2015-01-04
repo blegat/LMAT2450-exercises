@@ -332,27 +332,38 @@
 \end{solution}
 
 \begin{solution}
-%   This scheme is not secure:
-%
-%   We can define the cipher as $Enc_k(m_1, m_2) = C = c_1\| c_2 \| c_3 = p_k(IV\xor m_1) \| p_k(m_2 \xor p_k(IV\xor m_1)) \| p_k(m_3 \xor p_k(m_2 \xor p_k(IV\xor m_1)))$.
-%   $IV = 0^n$ so we know that $c_1 = p_k(m_1)$, using the inverse of $p_k$ (assumed known by the exercice),
-%   we can retrieve $m_1$. We can also retrieve $m_2 \xor c_1$ using the same method.
-%   The last block (encrypthing $r$) is not really interresting as we've already retrieved
-%   the messages. The solution to protect the scheme is to put the $r$ block at first.
-%
-% \paragraph{Note: }
-  Since $r$ is not outputted by the encryption, this is not an encryption scheme.
-  Indeed, $\Enc$ is not injective so we cannot define $\Dec$.
-  For example, the decryption of $p_k(0)$ could be any $m_1\|m_2$ because
-  if $r = p_k(p_k(m_1) \xor m_2)$,
+  Pour un message $m = m_1 \| m_2$,
+
+  \[ \Enc_k(m_1, m_2) = (y_1, y_2, y_3)  =(p_k(m_1) , p_k(y_1 \xor m_2), pk(y_2 \xor r)) \]
+
+  Le $R$ est random, et je pense que contrairement à ce que tu disais dans ta
+  solution, il est fourni en texte clair en même temps que le cipher text
+  (enfin bon de toute manière du point de vue de l'adversaire tu verras que
+  ça ne change pas grand chose)
+
+  Si on s'intéresse au ``game'' qui garantit la caractère CPA du scheme (cf slide 15 L3).
+  Il suffit qu'un adversaire $\A$ choisisse $m_0$ et $m_1$ distinct, \emph{il peut demander
+  leurs encryptions}.
+
+  If $m_0 = m_W || m_X$ and $m_1 = m_Y || m_Z$
 
   \begin{align*}
-    \Enc_k(m_1\|m_2) & = p_k(p_k(p_k(m_1) \xor m_2) \xor p_k(p_k(m_1) \xor m_2))\\
-                     & = p_k(0).
+    \Enc_k(m_W,m_X) = (p_k(mW), \ldots)\\
+    \Enc_k(m_Y,m_Z) = (p_k(mY), \ldots).
   \end{align*}
 
-  I guess this solution is not the expected one so if someone could tell me what I should do, that would be nice.
+  $\A$ envoit $m_0$ et $m_1$ au testeur
+  Le testeur choisit $b$ et renvoie $Enc(m_b) = (y_1 ,y_2, y_3)$
 
+  \begin{itemize}
+    \item Si $y_1 = p_k(m_W)$ l'adversaire sait que $b = 0$
+    \item Si $y_1 = p_k(m_Y)$ l'adversaire sait que $b = 1$
+  \end{itemize}
+
+  Le problème avec ce scheme d'encryption est qu'il n'est pas CPA secure car
+  le facteur $r$ random est très mal appliqué, ce qui fait que le début du
+  message encrypté qu'il renvoie est tout à fait déterministe et donc pas du
+  tout CPA secure.
 \end{solution}
 
 \begin{solution}
